@@ -2,6 +2,7 @@ const axios = require("axios");
 const { login } = require("ws3-fca");
 const fs = require("fs");
 
+let lastMessageTime = {};
 let money = {};
 
 function saveMoney() {
@@ -157,6 +158,9 @@ if (event.body == "Phó Captain") {
 
 🐉 BẮT POKEMON
 /pokemon -> bắt pokemon
+
+🕒 NGÀY GIỜ HIỆN TẠI
+/gio -> là ra
 
 🤖 BOT ONLINE`,
          event.threadID
@@ -452,6 +456,52 @@ ${result}`,
         event.threadID
       );
     }
+
+    if (event.body == "/gio") {
+
+const now = new Date();
+
+const time = now.toLocaleTimeString("vi-VN");
+const date = now.toLocaleDateString("vi-VN");
+
+api.sendMessage(
+`🕒 Giờ hiện tại: ${time}
+📅 Ngày: ${date}`,
+event.threadID
+);
+
+}
+
+const now = Date.now();
+
+if (!lastMessageTime[event.threadID]) {
+    lastMessageTime[event.threadID] = 0;
+}
+
+if (now - lastMessageTime[event.threadID] > 10 * 60 * 1000) {
+
+    api.getUserInfo(event.senderID, (err, userInfo) => {
+
+        let name = "Bạn";
+
+        if (
+            userInfo &&
+            userInfo[event.senderID] &&
+            userInfo[event.senderID].name
+        ) {
+            name = userInfo[event.senderID].name;
+        }
+
+        api.sendMessage(
+            `👋 Chào ${name}, bạn là người nhắn đầu tiên sau 10 phút im lặng!`,
+            event.threadID
+        );
+
+    });
+
+}
+
+lastMessageTime[event.threadID] = now;
 
 // ======================= 👮 ANTI SPAM =======================
 
