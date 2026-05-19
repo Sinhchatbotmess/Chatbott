@@ -2,6 +2,7 @@ const axios = require("axios");
 const { login } = require("ws3-fca");
 const fs = require("fs");
 
+let lastMessageTime = {};
 let money = {};
 
 function saveMoney() {
@@ -15,16 +16,7 @@ if (fs.existsSync("money.json")) {
    money = JSON.parse(fs.readFileSync("money.json"));
 }
 
-login({
-  appState: require("./appstate.json")
-}, (err, api) => {
-
- if (err) {
-   console.log(err);
-   return;
- }
-
- console.log("✅ BOT ONLINE");
+login({email:"tranhalinh2122232425@gmail.com",password:"Sinh290908"}, (err, api) => {
 
  api.listenMqtt((err, event) => {
 
@@ -69,7 +61,7 @@ event.threadID
 
 }
 
-const badWords = ["ngu", "óc chó", "đần", "cút", "cm", "cái buồi", "Đ", "đ", "ngáo", "dit con cu may", "lm"];
+const badWords = ["ngu", "con chó", "đần", "cút", "cm", "cái buồi", "Đ", "đ", "ngáo", "dit con cu may", "lm"];
 
 if (event.body) {
 
@@ -157,6 +149,9 @@ if (event.body == "Phó Captain") {
 
 🐉 BẮT POKEMON
 /pokemon -> bắt pokemon
+
+🕒 NGÀY GIỜ HIỆN TẠI
+/gio -> là ra
 
 🤖 BOT ONLINE`,
          event.threadID
@@ -273,10 +268,8 @@ event.threadID
 
 
    // TIỀN
-   let money = {};
-
    if (!money[event.senderID]) {
-      money[event.senderID] = "10000000";
+      money[event.senderID] = 10000000;
    }
 
 if (event.body == "/iq") {
@@ -339,7 +332,7 @@ saveMoney();
    if (event.body == "/sodu") {
 
       api.sendMessage(
-         `💰 Bạn đang có ${money[event.senderID]}Đồng`,
+         `💰 Bạn đang có ${money[event.senderID].toLocaleString()}Đồng`,
          event.threadID
       );
    }
@@ -454,6 +447,21 @@ ${result}`,
         event.threadID
       );
     }
+
+    if (event.body == "/gio") {
+
+const now = new Date();
+
+const time = now.toLocaleTimeString("vi-VN");
+const date = now.toLocaleDateString("vi-VN");
+
+api.sendMessage(
+`🕒 Giờ hiện tại: ${time}
+📅 Ngày: ${date}`,
+event.threadID
+);
+
+}
 
 // ======================= 👮 ANTI SPAM =======================
 
