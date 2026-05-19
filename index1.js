@@ -275,6 +275,15 @@ event.threadID
 
 }
 
+let cooldown = {};
+
+if (cooldown[event.senderID]) return;
+
+cooldown[event.senderID] = true;
+
+setTimeout(() => {
+  cooldown[event.senderID] = false;
+}, 2000); 
 
    // TIỀN
    if (!money[event.senderID]) {
