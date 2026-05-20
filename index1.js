@@ -509,37 +509,6 @@ event.threadID
 
 }
 
-const now = Date.now();
-
-if (!lastMessageTime[event.threadID]) {
-    lastMessageTime[event.threadID] = 0;
-}
-
-if (now - lastMessageTime[event.threadID] > 10 * 60 * 1000) {
-
-    api.getUserInfo(event.senderID, (err, userInfo) => {
-
-        let name = "Bạn";
-
-        if (
-            userInfo &&
-            userInfo[event.senderID] &&
-            userInfo[event.senderID].name
-        ) {
-            name = userInfo[event.senderID].name;
-        }
-
-        api.sendMessage(
-            `👋 Chào ${name}, bạn là người nhắn đầu tiên sau 10 phút im lặng!`,
-            event.threadID
-        );
-
-    });
-
-}
-
-lastMessageTime[event.threadID] = now;
-
    // GAME TÀI XỈU
    if (event.body == "/taixiu") {
 
