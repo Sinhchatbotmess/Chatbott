@@ -2,6 +2,8 @@ const axios = require("axios");
 const { login } = require("ws3-fca");
 const fs = require("fs");
 
+let spam = {};
+let cooldown = {};
 let lastMessageTime = {};
 let money = {};
 
@@ -41,6 +43,42 @@ login({
      );
 
    }
+
+if (cooldown[event.senderID]) return;
+
+cooldown[event.senderID] = true;
+
+setTimeout(() => {
+  cooldown[event.senderID] = false;
+}, 2000); 
+
+
+// ======================= 👮 ANTI SPAM =======================
+
+
+if (event.body) {
+
+if (!spam[event.senderID]) {
+spam[event.senderID] = 0;
+}
+
+spam[event.senderID]++;
+
+setTimeout(() => {
+spam[event.senderID]--;
+}, 5000);
+
+if (spam[event.senderID] >= 5) {
+
+api.sendMessage(
+"🚫 Bạn đang spam quá nhanh!",
+event.threadID
+);
+
+}
+
+}
+
 
  if (event.body.startsWith("/AI ")) {
 
@@ -275,16 +313,6 @@ event.threadID
 
 }
 
-let cooldown = {};
-
-if (cooldown[event.senderID]) return;
-
-cooldown[event.senderID] = true;
-
-setTimeout(() => {
-  cooldown[event.senderID] = false;
-}, 2000); 
-
    // TIỀN
    if (!money[event.senderID]) {
       money[event.senderID] = 10000000;
@@ -511,33 +539,6 @@ if (now - lastMessageTime[event.threadID] > 10 * 60 * 1000) {
 }
 
 lastMessageTime[event.threadID] = now;
-
-// ======================= 👮 ANTI SPAM =======================
-
-let spam = {};
-
-if (event.body) {
-
-if (!spam[event.senderID]) {
-spam[event.senderID] = 0;
-}
-
-spam[event.senderID]++;
-
-setTimeout(() => {
-spam[event.senderID]--;
-}, 5000);
-
-if (spam[event.senderID] >= 5) {
-
-api.sendMessage(
-"🚫 Bạn đang spam quá nhanh!",
-event.threadID
-);
-
-}
-
-}
 
    // GAME TÀI XỈU
    if (event.body == "/taixiu") {
