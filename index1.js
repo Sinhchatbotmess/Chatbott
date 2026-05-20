@@ -49,8 +49,8 @@ if (cooldown[event.senderID]) return;
 cooldown[event.senderID] = true;
 
 setTimeout(() => {
-  delete[event.senderID];
-}, 2000); 
+  delete cooldown[event.senderID];
+}, 2000);
 
 
 // ======================= 👮 ANTI SPAM =======================
@@ -68,7 +68,7 @@ setTimeout(() => {
 spam[event.senderID]--;
 }, 5000);
 
-if (spam[event.senderID] >= 5) {
+if (spam[event.senderID] >= 2) {
 
 api.sendMessage(
 "🚫 Bạn đang spam quá nhanh!",
@@ -108,7 +108,7 @@ event.threadID
 
 }
 
-const badWords = ["ngu", "con chó", "đần", "cút", "cm", "cái buồi", "cc", "đ", "ngáo", "dit con cu may", "l"];
+const badWords = ["ngu", "con chó", "đần", "cút", "cm", "cái buồi", "cc", "đéo", "ngáo", "dit con cu may"];
 
 if (event.body) {
 
