@@ -138,6 +138,82 @@ break;
    );
 
 }
+
+if (event.body.toLowerCase().startsWith("/bói")) {
+
+const input = event.body.slice(5).trim().toLowerCase();
+
+if (
+input === "quang trung - phương trinh" ||
+input === "phương trinh - quang trung"
+) {
+
+api.sendMessage(
+`💘 BÓI TÌNH YÊU 💘
+
+👦 Quang Trung
+❤️
+👧 Phương Trinh
+
+📊 Hợp nhau: 99,99%
+
+❤️ Mai Phát Thiệp Cưới Là Vừa`,
+event.threadID
+);
+
+return;
+}
+
+if (!input.includes("-")) {
+
+api.sendMessage(
+"💘 Dùng:\n/Bói tên1 - tên2",
+event.threadID
+);
+
+return;
+}
+
+const names = input.split("-");
+
+const name1 = names[0].trim();
+const name2 = names[1].trim();
+
+const percent = Math.floor(Math.random() * 101);
+
+let result = "";
+
+if (percent >= 90) {
+result = "💍 Cưới luôn đi!";
+}
+else if (percent >= 70) {
+result = "❤️ Rất hợp đôi";
+}
+else if (percent >= 50) {
+result = "🥰 Có tương lai";
+}
+else if (percent >= 30) {
+result = "😅 Hơi khó nha";
+}
+else {
+result = "💀 Friendzone toàn tập";
+}
+
+api.sendMessage(
+`💘 BÓI TÌNH YÊU 💘
+
+👦 ${name1}
+❤️
+👧 ${name2}
+
+📊 Hợp nhau: ${percent}%
+
+${result}`,
+event.threadID
+);
+
+}
+
 if (event.body == "/crush") {
    api.sendMessage("💘 crush thích bạn rồi đó", event.threadID);
 }
