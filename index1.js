@@ -68,7 +68,7 @@ setTimeout(() => {
 spam[event.senderID]--;
 }, 5000);
 
-if (spam[event.senderID] >= 2) {
+if (spam[event.senderID] >= 3) {
 
 api.sendMessage(
 "🚫 Bạn đang spam quá nhanh!",
