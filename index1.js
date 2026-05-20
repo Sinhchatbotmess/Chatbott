@@ -108,7 +108,7 @@ event.threadID
 
 }
 
-const badWords = ["ngu", "con chó", "đần", "cút", "cm", "cái buồi", "Đ", "đ", "ngáo", "dit con cu may", "lm"];
+const badWords = ["ngu", "con chó", "đần", "cút", "cm", "cái buồi", "Đ", "đ", "ngáo", "dit con cu may", "lm", "l"];
 
 if (event.body) {
 
