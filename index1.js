@@ -28,8 +28,15 @@ login({
  }
 
  console.log("✅ BOT ONLINE");
+ console.log("PID:", process.pid);
 
  api.listenMqtt((err, event) => {
+   console.log(
+  "EVENT:",
+  event.messageID,
+  event.body
+);
+
 
    if (!event || event.type !== "message" && event.type !== "message_reply" || !event.body) return;
 
