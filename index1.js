@@ -31,9 +31,17 @@ login({
 
  api.listenMqtt((err, event) => {
 
-   if (!event || !event.body) return;
+   if (!event || event.type !== "message" && event.type !== "message_reply" || !event.body) return;
 
    console.log(event.body);
+
+if (cooldown[event.senderID]) return;
+
+cooldown[event.senderID] = true;
+
+setTimeout(() => {
+  delete cooldown[event.senderID];
+}, 2000);
 
    if (event.body == "/ping") {
 
@@ -44,13 +52,6 @@ login({
 
    }
 
-if (cooldown[event.senderID]) return;
-
-cooldown[event.senderID] = true;
-
-setTimeout(() => {
-  delete cooldown[event.senderID];
-}, 2000);
 
 
 // ======================= 👮 ANTI SPAM =======================
