@@ -116,27 +116,6 @@ event.threadID
 
 }
 
-const badWords = ["ngu", "con chó", "đần", "cút", "cm", "cái buồi", "cc", "đéo", "ngáo", "dit con cu may"];
-
-if (event.body) {
-
-const msg = event.body.toLowerCase();
-
-for (const word of badWords) {
-
-if (msg.includes(word)) {
-
-api.sendMessage(
-`⚠️ ${event.senderID}, vui lòng không dùng từ ngữ bị cấm!`,
-event.threadID
-);
-
-break;
-}
-
-}
-
-}
 
    if (event.body == "/admin1") {
 
